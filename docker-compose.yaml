@@ -1,0 +1,30 @@
+services:
+  nodejs:
+    build:
+      context: ./backend/
+      dockerfile: Dockerfile
+    environment:
+      - GALLERY_DB_HOST=mariadb
+      - GALLERY_DB_NAME=${GALLERY_DB_NAME}
+      - GALLERY_DB_USER=${GALLERY_DB_USER}
+      - GALLERY_DB_PASSWORD=${GALLERY_DB_PASSWORD}
+      - GALLERY_BACKEND_API_KEY=${GALLERY_BACKEND_API_KEY}
+      - GALLERY_BACKEND_JWT_SECRET=${GALLERY_BACKEND_JWT_SECRET}
+      - GALLERY_BACKEND_PORT=${GALLERY_BACKEND_PORT}
+    depends_on:
+      - mariadb
+    restart: unless-stopped  
+    
+  mariadb:
+    image: mariadb:10.6
+    environment:
+      - MARIADB_ROOT_PASSWORD=${GALLERY_DB_ROOT_PASSWORD}
+      - MARIADB_DATABASE=${GALLERY_DB_NAME}
+      - MARIADB_USER=${GALLERY_DB_USER}
+      - MARIADB_PASSWORD=${GALLERY_DB_PASSWORD}
+    volumes:
+      - mariadb_data:/var/lib/mysql
+    restart: unless-stopped 
+
+volumes:
+  mariadb_data:
