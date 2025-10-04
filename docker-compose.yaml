@@ -11,6 +11,9 @@ services:
       - GALLERY_BACKEND_API_KEY=${GALLERY_BACKEND_API_KEY}
       - GALLERY_BACKEND_JWT_SECRET=${GALLERY_BACKEND_JWT_SECRET}
       - GALLERY_BACKEND_PORT=${GALLERY_BACKEND_PORT}
+    networks:
+      - backend
+      - database
     depends_on:
       - mariadb
     restart: unless-stopped  
@@ -22,9 +25,17 @@ services:
       - MARIADB_DATABASE=${GALLERY_DB_NAME}
       - MARIADB_USER=${GALLERY_DB_USER}
       - MARIADB_PASSWORD=${GALLERY_DB_PASSWORD}
+    networks:
+      - database
     volumes:
       - mariadb_data:/var/lib/mysql
     restart: unless-stopped 
 
+networks:
+  backend:
+      external: false
+  database:
+      external: false
 volumes:
   mariadb_data:
+
