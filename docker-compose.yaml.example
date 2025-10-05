@@ -17,25 +17,26 @@ services:
       - backend
       - database
 
-   # labels for Traefik  
-   # If traefik is enabled ports are not necessary disable them
+   # labels for Traefik disable if not using Traefik
+   # If Traefik is enabled ports are not necessary
 
 
-   # labels:
-   #  - "traefik.enable=true"
-   #  - "traefik.http.routers.gallerybackend.rule=Host(`gallerybackend.localhost`)"
-   #  - "traefik.http.routers.gallerybackend.entrypoints=web"
-   #  - "traefik.http.services.gallerybackend.loadbalancer.server.port=${GALLERY_BACKEND_PORT}"
+    labels:
+    - "traefik.enable=true"
+    - "traefik.http.routers.gallerybackend.rule=Host(`gallerybackend.localhost`)"
+    - "traefik.http.routers.gallerybackend.entrypoints=web"
+    - "traefik.http.services.gallerybackend.loadbalancer.server.port=${GALLERY_BACKEND_PORT}"
     
     depends_on:
       - mariadb
    
 
-   # IMPORTANT!! ->(change frontend/utils/api.ts and interface/utils/api.ts if you are not using Traefik)
-    ports: 
-    # HOST PORT:CONTAINER PORT
-    - 6767:${GALLERY_BACKEND_PORT}
-    restart: unless-stopped  
+   # IMPORTANT!! -> IF YOU ARE NOT USING TRAEFIK ENABLE PORTS
+   #  change frontend/utils/api.ts and interface/utils/api.ts if you are not using Traefik
+   # ports: 
+   # # HOST PORT:CONTAINER PORT
+   # - 6767:${GALLERY_BACKEND_PORT}
+   # restart: unless-stopped  
     
   mariadb:
     image: mariadb:10.6
@@ -59,12 +60,15 @@ services:
       context: frontend
       dockerfile: Dockerfile
 
+    
+   # labels for Traefik disable if not using Traefik
+   # If Traefik is enabled ports are not necessary
 
-    # labels:
-    #  - "traefik.enable=true"
-    #  - "traefik.http.routers.galleryfrontend.rule=Host(`gallery.localhost`)"
-    #  - "traefik.http.routers.galleryfrontend.entrypoints=web"
-    #  - "traefik.http.services.galleryfrontend.loadbalancer.server.port=80"
+    labels:
+     - "traefik.enable=true"
+     - "traefik.http.routers.galleryfrontend.rule=Host(`gallery.localhost`)"
+     - "traefik.http.routers.galleryfrontend.entrypoints=web"
+     - "traefik.http.services.galleryfrontend.loadbalancer.server.port=80"
     
     
     depends_on:
@@ -72,7 +76,9 @@ services:
     networks:
      - frontend
     
-    # IMPORTANT!! ->(change frontend/utils/api.ts and interface/utils/api.ts if you are not using Traefik)
+   # IMPORTANT!! -> IF YOU ARE NOT USING TRAEFIK ENABLE PORTS
+   #  change frontend/utils/api.ts and interface/utils/api.ts if you are not using Traefik
+
     ports: 
     # HOST PORT:CONTAINER PORT
     - 6769:80
@@ -85,17 +91,21 @@ services:
       dockerfile: Dockerfile
 
 
-    # labels:
-    #  - "traefik.enable=true"
-    #  - "traefik.http.routers.galleryinterface.rule=Host(`galleryinterface.localhost`)"
-    #  - "traefik.http.routers.galleryinterface.entrypoints=web"
-    #  - "traefik.http.services.galleryinterface.loadbalancer.server.port=80"
+   # labels for Traefik disable if not using Traefik
+   # If Traefik is enabled ports are not necessary
 
-    # IMPORTANT!! ->(change frontend/utils/api.ts and interface/utils/api.ts if you are not using Traefik)
+    labels:
+     - "traefik.enable=true"
+     - "traefik.http.routers.galleryinterface.rule=Host(`galleryinterface.localhost`)"
+     - "traefik.http.routers.galleryinterface.entrypoints=web"
+     - "traefik.http.services.galleryinterface.loadbalancer.server.port=80"
 
-    ports:
-    # HOST PORT:CONTAINER PORT
-    - 6770:80
+    # IMPORTANT!! -> IF YOU ARE NOT USING TRAEFIK ENABLE PORTS
+   #  change frontend/utils/api.ts and interface/utils/api.ts if you are not using Traefik
+
+   # ports:
+   # # HOST PORT:CONTAINER PORT
+   # - 6770:80
     
     
     depends_on:
@@ -105,7 +115,7 @@ services:
     
     restart: unless-stopped
 
-
+# IMPORTANT -> DELETE networks SECTIONS FROM EVERYWHERE IF YOU ARE NOT USING TRAEFIK
 networks:
   backend:
     external: false

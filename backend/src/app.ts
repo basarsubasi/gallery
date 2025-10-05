@@ -14,10 +14,15 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cors({
   origin: '*', // Allow all origins
   methods: '*',
-  allowedHeaders: '*'
+  allowedHeaders: ['Authorization', 'Content-Type', 'Accept', 'Origin', 'X-Requested-With', 'X-Api-Key']
 }));
 
 app.post('/api/auth', getJwtToken);
+
+// Add endpoint to check authentication status
+app.get('/api/auth/check', verifyJWT, (req: express.Request, res: express.Response) => {
+  res.json({ authenticated: true, user: req.user });
+});
 
 
 app.use('/api/images', (req: express.Request, res: express.Response, next: express.NextFunction) => {

@@ -23,6 +23,11 @@ RUN rm -rf /usr/share/nginx/html/*
 COPY --from=build /app/dist /usr/share/nginx/html
 
 
+# Copy custom nginx config for React Router fallback
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+
+
+
 # Expose port 80
 EXPOSE 80
 
