@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import '../styles/AddPhotoModal.css';
+import { updatePhoto } from '../utils/api';
 
 interface EditPhotoModalProps {
   onClose: () => void;
@@ -63,28 +64,13 @@ const EditPhotoModal: React.FC<EditPhotoModalProps> = ({ onClose, onSuccess, ima
     setIsLoading(true);
 
     try {
-      const API_BASE_ADDRESS = "http://gallerybackend.localhost/api";
-      const response = await fetch(`${API_BASE_ADDRESS}/images/${imageData.uuid}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('gallery_jwt_token')}`,
-        },
-        body: JSON.stringify(formData),
-      });
-
-      const result = await response.json();
-
-      if (!response.ok) {
-        throw new Error(result.message || 'Failed to update photo');
-      }
-
+      const result = await updatePhoto(imageData.uuid, formData);
       console.log('Photo updated successfully:', result);
       onSuccess();
       onClose(); // Close the modal after success
     } catch (err: any) {
       console.error('Error updating photo:', err);
-      setError(err.message || 'Failed to update photo. Please try again.');
+      setError(err.response?.data?.message || err.message || 'Failed to update photo. Please try again.');
       setIsLoading(false);
     }
   };
