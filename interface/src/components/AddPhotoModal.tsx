@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import '../styles/AddPhotoModal.css';
+import { addPhoto } from '../utils/api';
 
 interface AddPhotoModalProps {
   onClose: () => void;
@@ -40,27 +41,12 @@ const AddPhotoModal: React.FC<AddPhotoModalProps> = ({ onClose, onSuccess }) => 
     setIsLoading(true);
 
     try {
-      const API_BASE_ADDRESS = "http://gallerybackend.basarsubasi.com.tr/api";
-      const response = await fetch(`${API_BASE_ADDRESS}/images`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('gallery_jwt_token')}`,
-        },
-        body: JSON.stringify(formData),
-      });
-
-      const result = await response.json();
-
-      if (!response.ok) {
-        throw new Error(result.message || 'Failed to add photo');
-      }
-
+      const result = await addPhoto(formData);
       console.log('Photo added successfully:', result);
       onSuccess();
     } catch (err: any) {
       console.error('Error adding photo:', err);
-      setError(err.message || 'Failed to add photo. Please try again.');
+      setError(err.response?.data?.message || err.message || 'Failed to add photo. Please try again.');
       setIsLoading(false);
     }
   };

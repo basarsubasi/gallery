@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { fetchImageByUUID } from '../utils/api';
+import { fetchImageByUUID, deletePhoto } from '../utils/api';
 import EditPhotoModal from '../components/EditPhotoModal';
 import '../styles/SingleImagePage.css';
 
@@ -45,24 +45,12 @@ const SingleImagePage: React.FC = () => {
 
   const handleDelete = async () => {
     try {
-      const API_BASE_ADDRESS = "http://gallerybackend.basarsubasi.com.tr/api";
-      const response = await fetch(`${API_BASE_ADDRESS}/images/${uuid}`, {
-        method: 'DELETE',
-        headers: {
-          'Authorization': `Bearer ${localStorage.getItem('gallery_jwt_token')}`,
-        },
-      });
-
-      if (!response.ok) {
-        const result = await response.json();
-        throw new Error(result.message || 'Failed to delete photo');
-      }
-
+      await deletePhoto(uuid!);
       // Redirect to homepage after successful deletion
       navigate('/');
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error deleting photo:', error);
-      alert('Failed to delete photo. Please try again.');
+      alert(error.response?.data?.message || error.message || 'Failed to delete photo. Please try again.');
     }
   };
 

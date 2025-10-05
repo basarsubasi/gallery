@@ -124,3 +124,36 @@ export const checkAuthStatus = async (): Promise<boolean> => {
 export const logout = () => {
   clearToken();
 };
+
+// Photo CRUD operations
+export interface PhotoData {
+  image_url: string;
+  name: string;
+  type: string;
+  country: string;
+  city: string;
+  year_taken: string;
+  iso: string;
+  lens: string;
+  camera: string;
+  film_roll?: string;
+  color: string;
+  focal_length: string;
+  shutter_speed: string;
+  aperture: string;
+}
+
+export const addPhoto = async (photoData: PhotoData) => {
+  const response = await axios.post(`${API_BASE_ADDRESS}/images`, photoData);
+  return response.data;
+};
+
+export const updatePhoto = async (uuid: string, photoData: PhotoData) => {
+  const response = await axios.put(`${API_BASE_ADDRESS}/images/${uuid}`, photoData);
+  return response.data;
+};
+
+export const deletePhoto = async (uuid: string) => {
+  const response = await axios.delete(`${API_BASE_ADDRESS}/images/${uuid}`);
+  return response.data;
+};
