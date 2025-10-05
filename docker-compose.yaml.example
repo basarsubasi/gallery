@@ -59,9 +59,6 @@ services:
       context: frontend
       dockerfile: Dockerfile
 
-    # labels for Traefik  
-    
-    # If traefik is enabled ports are not necessary disable them
 
     # labels:
     #  - "traefik.enable=true"

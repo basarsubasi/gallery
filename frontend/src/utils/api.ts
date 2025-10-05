@@ -3,8 +3,8 @@ import axios from 'axios';
 
 // Base URL for the API 
 // IMPORTANT -> if you are not using docker
-// IMPORTANT -> Change this to http://localhost:<backend-port>/api
-const API_BASE_ADDRESS = "http://nodejs:6767/api" 
+// IMPORTANT -> Change this to "http://localhost:<host-backend-port>/api"
+const API_BASE_ADDRESS = "http://gallerybackend.localhost/api" // for traefik
 
 export const fetchImages = async (params: Record<string, string | number>) => {
   const response = await axios.get(`${API_BASE_ADDRESS}/images`, { params });

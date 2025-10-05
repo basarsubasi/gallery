@@ -17,7 +17,7 @@ COPY . .
 RUN npx tsc
 
 # Expose port
-EXPOSE $BACKEND_PORT
+EXPOSE $GALLERY_BACKEND_PORT
 
 # Start the application
 CMD ["node", "dist/app.js"]
