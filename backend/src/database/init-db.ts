@@ -38,7 +38,7 @@ async function initializeDatabase() {
     await pool.query(`
     CREATE TABLE IF NOT EXISTS images (
       id INT AUTO_INCREMENT PRIMARY KEY,
-      uuid VARCHAR(36) NOT NULL,
+      uuid VARCHAR(36) NOT NULL UNIQUE,
       image_url VARCHAR(255) NOT NULL,
       name VARCHAR(255) NOT NULL,
       type VARCHAR(255) NOT NULL,
