@@ -1,0 +1,10 @@
+
+services:
+  frontend:
+    build:
+      context: frontend
+      dockerfile: Dockerfile
+    networks:
+    - frontend
+    - backend
+    restart: unless-stopped

@@ -1,7 +1,8 @@
 services:
+
   nodejs:
     build:
-      context: ./backend/
+      context: backend
       dockerfile: Dockerfile
     environment:
       - GALLERY_DB_HOST=mariadb
@@ -25,17 +26,33 @@ services:
       - MARIADB_DATABASE=${GALLERY_DB_NAME}
       - MARIADB_USER=${GALLERY_DB_USER}
       - MARIADB_PASSWORD=${GALLERY_DB_PASSWORD}
-    networks:
-      - database
     volumes:
       - mariadb_data:/var/lib/mysql
-    restart: unless-stopped 
+    networks:
+      - database
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: frontend
+      dockerfile: Dockerfile
+    ports:
+    - 3100:80
+    depends_on:
+    - nodejs
+    networks:
+    - frontend
+    - backend
+    restart: unless-stopped
+
 
 networks:
   backend:
-      external: false
+    external: false
+  frontend:
+    external: false
   database:
-      external: false
+    external: false
 volumes:
   mariadb_data:
 

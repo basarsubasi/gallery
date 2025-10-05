@@ -1,0 +1,61 @@
+.layout {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Ensure the layout takes up the full viewport height */
+  }
+  
+
+  .page-header {
+    text-align: left;
+    font-size: 20px; /* Make the text prominent */
+    font-weight: bold;
+    padding-top: 20px; /* Add spacing above and below the text */
+    padding-left: 20px;
+    background-color: white; /* Light gray background for the header */
+    color: black; /* Dark text color */
+    display: flex; /* Enable flexbox to align the items */
+    gap: 20px; /* Add space between links */
+    align-items: center; /* Vertically align items in the center */
+  }
+  .page-header .main-title {
+    font-size: 24px; /* Make the text prominent */
+    margin-right: 30px; /* Increase space between "basarsubasi's photos" and the links */
+  }
+  
+  .content {
+    flex: 1; /* Push the footer to the bottom if content is shorter */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: white; /* Add your desired background color here */
+
+  }
+  
+  .page-footer {
+    text-align: center;
+    font-size: 12px;
+    color: #555;
+    padding: 10px 0;
+    background: white; /* Ensure it blends with the layout */
+    background-color: white; /* Add your desired background color here */
+
+  }
+  
+
+  /* Additions for Layout.css */
+@media (max-width: 768px) {
+  .page-header {
+    font-size: 18px; /* Adjust font size for headers */
+    padding-left: 15px; /* Adjust padding */
+  }
+
+  .content {
+    padding: 10px; /* Add padding to content area */
+  }
+
+  .page-footer {
+    font-size: 10px; /* Adjust footer font size */
+    padding: 8px 0; /* Adjust footer padding */
+  }
+}
