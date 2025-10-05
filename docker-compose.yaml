@@ -36,8 +36,6 @@ services:
     build:
       context: frontend
       dockerfile: Dockerfile
-    ports:
-    - 3100:80
     depends_on:
     - nodejs
     networks:
@@ -49,10 +47,11 @@ services:
 networks:
   backend:
     external: false
-  frontend:
-    external: false
   database:
     external: false
+  frontend:
+    external: false
+
 volumes:
   mariadb_data:
 
