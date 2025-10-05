@@ -50,7 +50,7 @@ services:
     networks:
       - database
 
-# IMPORTANT!! -> IF YOU ARE NOT USING TRAEFIK ENABLE PORTS
+# IMPORTANT!! -> IF YOU ARE NOT USING TRAEFIK ENABLE PORTS (you might want to skip enabling ports for the database)
 #  change frontend/utils/api.ts and interface/utils/api.ts if you are not using Traefik
 
     # ports: 
