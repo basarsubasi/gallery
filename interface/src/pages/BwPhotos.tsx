@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { fetchImagesByColor } from '../utils/api';
+import { fetchImagesByColor} from '../utils/api';
 import { useNavigate } from 'react-router-dom';
+
 import '../styles/Homepage.css';
 
-const ColorPhotos: React.FC = () => {
+const BwPhotos: React.FC = () => {
   const [images, setImages] = useState<any[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
@@ -13,21 +14,21 @@ const ColorPhotos: React.FC = () => {
   useEffect(() => {
     const loadImages = async () => {
       try {
-        const response = await fetchImagesByColor('colored', currentPage, limit);
+        const response = await fetchImagesByColor('bw', currentPage, limit);
         const { data, total } = response;
 
         const totalPages = Math.ceil(total / limit);
         setTotalPages(totalPages);
 
-    const fetchedImages = data.map((image: any) => ({
-                 ...image,
-                 imageUrl: image.image_url
-               }));
-       
-               setImages(fetchedImages);
-             } catch (error) {
-               console.error('Error fetching images:', error);
-             }
+      const fetchedImages = data.map((image: any) => ({
+              ...image,
+              imageUrl: image.image_url //fetchImageFileByUUID(image.uuid),
+            }));
+    
+            setImages(fetchedImages);
+          } catch (error) {
+            console.error('Error fetching images:', error);
+          }
     };
 
     loadImages();
@@ -71,4 +72,4 @@ const ColorPhotos: React.FC = () => {
   );
 };
 
-export default ColorPhotos;
+export default BwPhotos;

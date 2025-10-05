@@ -1,0 +1,76 @@
+.single-image-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centers content horizontally */
+  background-color: white; /* Background color */
+  padding: 0 40px; /* Horizontal padding for breathing room */
+  gap: 10px; /* Add some space between elements */
+  min-height: 100vh; /* Ensure the page covers the full viewport */
+}
+
+.image-container {
+  width: 100%; /* Use full width */
+  max-height: 70vh; /* Restrict the image container's height */
+  display: flex;
+  justify-content: center; /* Center the image horizontally */
+  align-items: center; /* Center the image vertically */
+  padding-bottom: 30px; /* Add space between the image and metadata */
+  flex-shrink: 0; /* Prevent shrinking */
+  padding-top: 150px;
+}
+
+.image-container img {
+  max-width: 80%; /* Allow the image to scale up horizontally */
+  max-height: 80%; /* Allow the image to scale up vertically */
+  object-fit: contain; /* Ensure the entire image is visible without distortion */
+  display: block;
+}
+
+/* Limit image dimensions */
+.image-container img {
+  max-width: 960px; /* Set a maximum width for images */
+  max-height: 640px; /* Set a maximum height for images */
+  width: auto; /* Maintain aspect ratio */
+  height: auto; /* Maintain aspect ratio */
+}
+
+.image-metadata {
+  display: flex;
+  flex-wrap: wrap; /* Wrap metadata items to the next line if needed */
+  justify-content: center; /* Center the metadata */
+  text-align: center;
+  font-size: 14px;
+  max-width: 800px; /* Restrict the width of the metadata container */
+  width: 100%;
+  gap: 15px; /* Add spacing between metadata items */
+  margin-top: 100px; /* Add space between image and metadata */
+  line-height: 0;
+  padding-bottom: 10px; /* Prevent metadata from touching the bottom */
+  position: relative; /* Stay in the natural flow of the document */
+  top: 0; /* Ensure it doesn't move up */
+}
+
+
+/* Additions for SingleImagePage.css */
+@media (max-width: 768px) {
+  .single-image-page {
+    padding: 0 20px; /* Reduce padding for smaller screens */
+    gap: 8px; /* Adjust gap between elements */
+  }
+
+  .image-container {
+    padding-top: 100px; /* Adjust padding above the image */
+    padding-bottom: 20px; /* Adjust padding below the image */
+  }
+
+  .image-container img {
+    max-width: 100%; /* Ensure the image scales to fit */
+    max-height: 60vh; /* Restrict height for smaller screens */
+  }
+
+  .image-metadata {
+    font-size: 12px; /* Reduce font size */
+    line-height: 1.2; /* Adjust line spacing */
+    margin-top: 50px; /* Reduce spacing above metadata */
+  }
+}

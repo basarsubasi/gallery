@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { fetchImagesByColor } from '../utils/api';
 import { useNavigate } from 'react-router-dom';
+import { fetchPaginatedImages } from '../utils/api';
 import '../styles/Homepage.css';
 
-const ColorPhotos: React.FC = () => {
+const Homepage: React.FC = () => {
   const [images, setImages] = useState<any[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
@@ -13,21 +13,22 @@ const ColorPhotos: React.FC = () => {
   useEffect(() => {
     const loadImages = async () => {
       try {
-        const response = await fetchImagesByColor('colored', currentPage, limit);
+        const response = await fetchPaginatedImages(currentPage, limit);
         const { data, total } = response;
 
+        // Calculate total pages
         const totalPages = Math.ceil(total / limit);
         setTotalPages(totalPages);
 
-    const fetchedImages = data.map((image: any) => ({
-                 ...image,
-                 imageUrl: image.image_url
-               }));
-       
-               setImages(fetchedImages);
-             } catch (error) {
-               console.error('Error fetching images:', error);
-             }
+        const fetchedImages = data.map((image: any) => ({
+          ...image,
+          imageUrl: image.image_url //fetchImageFileByUUID(image.uuid),
+        }));
+
+        setImages(fetchedImages);
+      } catch (error) {
+        console.error('Error fetching images:', error);
+      }
     };
 
     loadImages();
@@ -53,22 +54,27 @@ const ColorPhotos: React.FC = () => {
             className="grid-item"
             key={image.uuid}
             onClick={() => handleImageClick(image.uuid)}
+            style={{ cursor: 'pointer' }}
           >
-            <img src={image.imageUrl} alt={'photo'} />
+            <img
+              src={image.imageUrl}
+              alt={'photo'}
+              loading="eager"
+            />
           </div>
         ))}
       </div>
       <div className="pagination">
-        <button onClick={handlePreviousPage} disabled={currentPage === 1}>
-          &lt;
-        </button>
-        <span>{currentPage}</span>
-        <button onClick={handleNextPage} disabled={currentPage === totalPages}>
-          &gt;
-        </button>
-      </div>
+  <button onClick={handlePreviousPage} disabled={currentPage === 1}>
+    &lt;
+  </button>
+  <span>{currentPage}</span>
+  <button onClick={handleNextPage} disabled={currentPage === totalPages}>
+    &gt;
+  </button>
+</div>
     </div>
   );
 };
 
-export default ColorPhotos;
+export default Homepage;
