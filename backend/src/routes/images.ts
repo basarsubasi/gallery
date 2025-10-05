@@ -60,7 +60,7 @@ router.post('/', async (req: Request, res: Response): Promise<void> => {
 
     // Insert data into the database
     const dbQuery = `
-      INSERT INTO images (uuid, filepath, name, type, country, city, year_taken, file_type, 
+      INSERT INTO images (uuid, image_url, name, type, country, city, year_taken, file_type, 
                           iso, lens, camera, film_roll, color, focal_length, shutter_speed, aperture, width, height)
       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     `;
@@ -367,7 +367,7 @@ router.delete('/:uuid', async (req, res) => {
     const { uuid } = req.params;
 
     // Check if the image exists
-    const selectQuery = 'SELECT filepath FROM images WHERE uuid = ?';
+    const selectQuery = 'SELECT image_url FROM images WHERE uuid = ?';
     const result = await pool.query(selectQuery, [uuid]);
 
     if (result.length === 0) {
