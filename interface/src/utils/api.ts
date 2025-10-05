@@ -4,7 +4,7 @@ import axios from 'axios';
 // Base URL for the API 
 // IMPORTANT -> if you are not using docker
 // IMPORTANT -> Change this to "http://localhost:<host-backend-port>/api"
-const API_BASE_ADDRESS = "http://gallerybackend.localhost/api" // for traefik
+const API_BASE_ADDRESS = "https://gallerybackend.basarsubasi.com.tr/api" // for traefik
 
 // Token storage utilities
 const TOKEN_KEY = 'gallery_jwt_token';

@@ -45,7 +45,7 @@ const SingleImagePage: React.FC = () => {
 
   const handleDelete = async () => {
     try {
-      const API_BASE_ADDRESS = "http://gallerybackend.localhost/api";
+      const API_BASE_ADDRESS = "http://gallerybackend.basarsubasi.com.tr/api";
       const response = await fetch(`${API_BASE_ADDRESS}/images/${uuid}`, {
         method: 'DELETE',
         headers: {

@@ -63,7 +63,7 @@ const EditPhotoModal: React.FC<EditPhotoModalProps> = ({ onClose, onSuccess, ima
     setIsLoading(true);
 
     try {
-      const API_BASE_ADDRESS = "http://gallerybackend.localhost/api";
+      const API_BASE_ADDRESS = "http://gallerybackend.basarsubasi.com.tr/api";
       const response = await fetch(`${API_BASE_ADDRESS}/images/${imageData.uuid}`, {
         method: 'PUT',
         headers: {
