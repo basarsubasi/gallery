@@ -1,12 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../styles/AddPhotoModal.css';
 
-interface AddPhotoModalProps {
+interface EditPhotoModalProps {
   onClose: () => void;
   onSuccess: () => void;
+  imageData: any;
 }
 
-const AddPhotoModal: React.FC<AddPhotoModalProps> = ({ onClose, onSuccess }) => {
+const EditPhotoModal: React.FC<EditPhotoModalProps> = ({ onClose, onSuccess, imageData }) => {
   const [formData, setFormData] = useState({
     image_url: '',
     name: '',
@@ -26,6 +27,28 @@ const AddPhotoModal: React.FC<AddPhotoModalProps> = ({ onClose, onSuccess }) => 
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
 
+  // Populate form with existing image data
+  useEffect(() => {
+    if (imageData) {
+      setFormData({
+        image_url: imageData.image_url || '',
+        name: imageData.name || '',
+        type: imageData.type || '',
+        country: imageData.country || '',
+        city: imageData.city || '',
+        year_taken: imageData.year_taken || '',
+        iso: imageData.iso || '',
+        lens: imageData.lens || '',
+        camera: imageData.camera || '',
+        film_roll: imageData.film_roll || '',
+        color: imageData.color || '',
+        focal_length: imageData.focal_length || '',
+        shutter_speed: imageData.shutter_speed || '',
+        aperture: imageData.aperture || '',
+      });
+    }
+  }, [imageData]);
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({
@@ -41,8 +64,8 @@ const AddPhotoModal: React.FC<AddPhotoModalProps> = ({ onClose, onSuccess }) => 
 
     try {
       const API_BASE_ADDRESS = "http://gallerybackend.localhost/api";
-      const response = await fetch(`${API_BASE_ADDRESS}/images`, {
-        method: 'POST',
+      const response = await fetch(`${API_BASE_ADDRESS}/images/${imageData.uuid}`, {
+        method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${localStorage.getItem('gallery_jwt_token')}`,
@@ -53,14 +76,15 @@ const AddPhotoModal: React.FC<AddPhotoModalProps> = ({ onClose, onSuccess }) => 
       const result = await response.json();
 
       if (!response.ok) {
-        throw new Error(result.message || 'Failed to add photo');
+        throw new Error(result.message || 'Failed to update photo');
       }
 
-      console.log('Photo added successfully:', result);
+      console.log('Photo updated successfully:', result);
       onSuccess();
+      onClose(); // Close the modal after success
     } catch (err: any) {
-      console.error('Error adding photo:', err);
-      setError(err.message || 'Failed to add photo. Please try again.');
+      console.error('Error updating photo:', err);
+      setError(err.message || 'Failed to update photo. Please try again.');
       setIsLoading(false);
     }
   };
@@ -69,7 +93,7 @@ const AddPhotoModal: React.FC<AddPhotoModalProps> = ({ onClose, onSuccess }) => 
     <div className="add-photo-modal-overlay" onClick={onClose}>
       <div className="add-photo-modal" onClick={(e) => e.stopPropagation()}>
         <div className="modal-header">
-          <h2>Add New Photo</h2>
+          <h2>Edit Photo</h2>
           <button className="close-button" onClick={onClose}>&times;</button>
         </div>
         
@@ -195,7 +219,7 @@ const AddPhotoModal: React.FC<AddPhotoModalProps> = ({ onClose, onSuccess }) => 
 
           <div className="form-row">
             <div className="form-group">
-              <label htmlFor="color">Color Type</label>
+              <label htmlFor="color">color type</label>
               <select
                 id="color"
                 name="color"
@@ -266,7 +290,7 @@ const AddPhotoModal: React.FC<AddPhotoModalProps> = ({ onClose, onSuccess }) => 
               Cancel
             </button>
             <button type="submit" className="submit-button" disabled={isLoading}>
-              {isLoading ? 'Adding...' : 'Add Photo'}
+              {isLoading ? 'Updating...' : 'Update Photo'}
             </button>
           </div>
         </form>
@@ -275,4 +299,4 @@ const AddPhotoModal: React.FC<AddPhotoModalProps> = ({ onClose, onSuccess }) => 
   );
 };
 
-export default AddPhotoModal;
+export default EditPhotoModal;
