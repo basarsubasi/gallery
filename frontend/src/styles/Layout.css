@@ -45,6 +45,11 @@
 
   /* Additions for Layout.css */
 @media (max-width: 768px) {
+
+ .page-header .main-title .title-photos {
+    display: block; /* Force "photos" to wrap to a new line */
+  }
+
   .page-header {
     font-size: 18px; /* Adjust font size for headers */
     padding-left: 15px; /* Adjust padding */

@@ -79,12 +79,41 @@ services:
     restart: unless-stopped
 
 
+  interface:
+    build:
+      context: interface
+      dockerfile: Dockerfile
+
+
+    # labels:
+    #  - "traefik.enable=true"
+    #  - "traefik.http.routers.galleryinterface.rule=Host(`galleryinterface.localhost`)"
+    #  - "traefik.http.routers.galleryinterface.entrypoints=web"
+    #  - "traefik.http.services.galleryinterface.loadbalancer.server.port=80"
+
+    # IMPORTANT!! ->(change frontend/utils/api.ts and interface/utils/api.ts if you are not using Traefik)
+
+    ports:
+    # HOST PORT:CONTAINER PORT
+    - 6770:80
+    
+    
+    depends_on:
+     - nodejs
+    networks:
+     - interface
+    
+    restart: unless-stopped
+
+
 networks:
   backend:
     external: false
   database:
     external: false
   frontend:
+    external: false
+  interface:
     external: false
 
 volumes:
