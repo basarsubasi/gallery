@@ -49,10 +49,14 @@ services:
       - mariadb_data:/var/lib/mysql
     networks:
       - database
-        # if traefik is enabled ports are not necessary
-    ports: 
+
+# IMPORTANT!! -> IF YOU ARE NOT USING TRAEFIK ENABLE PORTS
+#  change frontend/utils/api.ts and interface/utils/api.ts if you are not using Traefik
+
+    # ports: 
     # HOST PORT:CONTAINER PORT
-    - 6768:3306
+    # - 6768:3306
+    
     restart: unless-stopped
 
   frontend:
@@ -79,9 +83,9 @@ services:
    # IMPORTANT!! -> IF YOU ARE NOT USING TRAEFIK ENABLE PORTS
    #  change frontend/utils/api.ts and interface/utils/api.ts if you are not using Traefik
 
-    ports: 
-    # HOST PORT:CONTAINER PORT
-    - 6769:80
+   # ports: 
+   # HOST PORT:CONTAINER PORT
+   # - 6769:80
     restart: unless-stopped
 
 
