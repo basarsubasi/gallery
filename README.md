@@ -87,9 +87,9 @@ cp docker-compose.yaml.example docker-compose.yaml
 
 ### Option 1: Deploy with Traefik (Recommended way)
 
-1. **Deploy the Gallery Application:**
+1. **Build & Deploy the Gallery Services:**
 ```bash
-docker-compose up -d
+docker-compose up -d --build
 ```
 
 2. **Deploy Traefik:**
@@ -119,9 +119,9 @@ docker-compose up -d
    const API_BASE_URL = 'http://localhost:6767'; // or your server IP:Port
    ```
 
-3. **Deploy:**
+3. **Build & Deploy:**
 ```bash
-docker-compose up -d
+docker-compose up -d --build
 ```
 
 **Access URLs:**
