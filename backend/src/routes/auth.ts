@@ -36,7 +36,7 @@ declare global {
 export const generateToken = (userId: string | number): string => {
   const compositeSecret = createCompositeSecret();
   return jwt.sign({ id: userId }, compositeSecret, {
-    expiresIn: '12h',
+    expiresIn: '6h',
   });
 };
 
