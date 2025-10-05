@@ -97,7 +97,6 @@ docker-compose up -d
 cd traefik
 cp docker-compose.yaml.example docker-compose.yaml
 docker-compose up -d
-cd ..
 ```
 
 **Access the services:**
