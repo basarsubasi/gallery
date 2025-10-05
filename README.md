@@ -159,6 +159,8 @@ npm run dev
 
 The application uses MariaDB with automatic database initialization. The database schema is created automatically when the backend starts for the first time.
 
+Be aware that MariaDB is only used for storing metadata of the pictures, you need to provide an accessible image URL for gallery to display the image.
+
 ## 🌐 API Endpoints
 
 ### Authentication
