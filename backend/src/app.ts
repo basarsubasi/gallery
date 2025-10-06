@@ -1,14 +1,16 @@
 import express from 'express';
 import dotenv from 'dotenv';
-import imagesRouter from './routes/images';
-import initializeDatabase from './database/init-db';
 import cors from 'cors'; 
+import initializeDatabase from './database/init-db';
+import authRouter from './routes/auth';
+import imagesRouter from './routes/images';
 import {verifyJWT} from './middleware/authMiddleware';
-import { getJwtToken } from './routes/auth';
 
 dotenv.config();
 
 const app = express();
+
+// Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors({
@@ -17,28 +19,13 @@ app.use(cors({
   allowedHeaders: ['Authorization', 'Content-Type', 'Accept', 'Origin', 'X-Requested-With', 'X-Api-Key']
 }));
 
-app.post('/api/auth', getJwtToken);
+// Routes
+app.use('/api/auth', authRouter);
 
-// Add endpoint to check authentication status
-app.get('/api/auth/check', verifyJWT, (req: express.Request, res: express.Response) => {
-  res.json({ authenticated: true, user: req.user });
-});
+app.use('/api/images', imagesRouter);
 
-
-app.use('/api/images', (req: express.Request, res: express.Response, next: express.NextFunction) => {
-  // Allow GET requests without authentication
-  if (req.method === 'GET') {
-    return next();
-  }
-  // Apply JWT verification for non-GET methods (POST, PUT, DELETE)
-  verifyJWT(req, res, next);
-}, imagesRouter);
-
-
-// Initialize the database
-
+// Initialize the database and start the server
 initializeDatabase().then(() => {
-  // Start the server only after the database is initialized
   const PORT = parseInt(process.env.GALLERY_BACKEND_PORT || '3000', 10);
   app.listen(PORT, '0.0.0.0', () => {
     console.log(`Server is running on port ${PORT}`);
