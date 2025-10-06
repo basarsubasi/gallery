@@ -1,17 +1,14 @@
 import pool from './connection'; // Assuming your database connection is in connection.ts
-import dotenv from 'dotenv'
-
-dotenv.config({ path: '../../.env' });
 
 
-const GALLERY_DB_NAME = process.env.GALLERY_DB_NAME
+
 
 
 async function flushDatabase() {
     try {
       // Drop all tables in the database
       console.log('Flushing database...');
-      await pool.query(`DROP DATABASE IF EXISTS ${GALLERY_DB_NAME};`);
+      await pool.query(`DROP DATABASE IF EXISTS gallery_db;`);
       console.log('Database flushed successfully.');
     } catch (error) {
       console.error('Error flushing database:', error);
@@ -26,7 +23,7 @@ async function initializeDatabase() {
     
     // Create the database if it doesn't exist
     await pool.query(`
-      CREATE DATABASE IF NOT EXISTS ${GALLERY_DB_NAME};
+      CREATE DATABASE IF NOT EXISTS gallery_db;
     `);
 
     // Use the database
