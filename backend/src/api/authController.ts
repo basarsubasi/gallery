@@ -70,6 +70,10 @@ export const getJwtToken = (req: Request, res: Response): void => {
 
 // Check authentication status
 export const checkAuthStatus = (req: Request, res: Response): void => {
+  if (!req.user) {
+    res.status(401).json({ authenticated: false, error: 'User not authenticated' });
+    return;
+  }
   res.json({ authenticated: true, user: req.user });
 };
 
