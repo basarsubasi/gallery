@@ -7,7 +7,7 @@ services:
     
     environment:
       - GALLERY_DB_HOST=mariadb
-      - GALLERY_DB_NAME=${GALLERY_DB_NAME}
+      - GALLERY_DB_NAME=gallery_db
       - GALLERY_DB_USER=${GALLERY_DB_USER}
       - GALLERY_DB_PASSWORD=${GALLERY_DB_PASSWORD}
       - GALLERY_BACKEND_API_KEY=${GALLERY_BACKEND_API_KEY}
@@ -42,7 +42,7 @@ services:
     image: mariadb:10.6
     environment:
       - MARIADB_ROOT_PASSWORD=${GALLERY_DB_ROOT_PASSWORD}
-      - MARIADB_DATABASE=${GALLERY_DB_NAME}
+      - MARIADB_DATABASE=$gallery_db
       - MARIADB_USER=${GALLERY_DB_USER}
       - MARIADB_PASSWORD=${GALLERY_DB_PASSWORD}
     volumes:
