@@ -1,4 +1,4 @@
-import express from 'express';
+import express, { json } from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors'; 
 import initializeDatabase from './database/init-db';
@@ -19,6 +19,10 @@ app.use(cors({
   allowedHeaders: ['Authorization', 'Content-Type', 'Accept', 'Origin', 'X-Requested-With', 'X-Api-Key'],
   credentials: true
 }));
+
+app.get('/healthz', (req, res) => {
+  res.status(200).json({ status: 'ok' });
+});
 
 // Routes
 app.use('/api/auth', authRouter);
