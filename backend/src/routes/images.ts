@@ -1,7 +1,7 @@
 import express from 'express';
 import {
   createImage,
-  getAllImages,
+ // getAllImages,
   getPaginatedImages,
   getImagesByColor,
   getImageByUuid,
@@ -16,7 +16,7 @@ const router = express.Router();
 router.post('/', verifyJWT, createImage);
 
 // GET /api/images - Get all images
-router.get('/', getAllImages);
+// router.get('/', getAllImages);
 
 // GET /api/images/paginated - Get paginated images
 router.get('/paginated',  getPaginatedImages);
