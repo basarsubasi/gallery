@@ -90,21 +90,20 @@ export const createImage = async (req: Request, res: Response): Promise<void> =>
 };
 
 // Get all images
-export const getAllImages = async (req: Request, res: Response): Promise<void> => {
-  try {
-    const query = 'SELECT * FROM images';
-    const results = await pool.query(query);
-
-    res.status(200).json({
-      message: 'Images retrieved successfully.',
-      data: results,
-    });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Server error.' });
-  }
-};
-
+ // export const getAllImages = async (req: Request, res: Response): Promise<void> => {
+ //   try {
+ //     const query = 'SELECT * FROM images';
+ //     const results = await pool.query(query);
+ // 
+ //     res.status(200).json({
+ //       message: 'Images retrieved successfully.',
+ //       data: results,
+ //     });
+ //   } catch (error) {
+ //     console.error(error);
+ //     res.status(500).json({ message: 'Server error.' });
+ //   }
+ // };
 // Get paginated images
 export const getPaginatedImages = async (req: Request, res: Response): Promise<void> => {
   try {
