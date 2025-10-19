@@ -182,6 +182,6 @@ The backend is configured to accept requests from all domains by default, if you
 ```typescript
 app.use(cors({
   origin: ['https://your-gallery-domain.com', 'https://your-admin-domain.com'],
-  // ... other CORS options...
+  // ... other CORS options..
 }));
 ```
